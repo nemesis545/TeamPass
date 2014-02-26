@@ -383,7 +383,7 @@ if (!empty($_POST['type'])) {
          */
         case "admin":
             // Check KEY
-            if ($_POST['key'] != $_SESSION['key']) {
+            if ($_POST['key'] != $_SESSION['key'] || $_SESSION['is_admin'] != 1) {
                 // error
                 exit();
             }

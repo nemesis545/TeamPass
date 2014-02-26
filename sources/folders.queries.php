@@ -193,16 +193,20 @@ if (isset($_POST['newtitle'])) {
             $error = "";
 
             //decrypt and retreive data in JSON format
-            $dataReceived = json_decode(
-                Encryption\Crypt\aesctr::decrypt($_POST['data'], $_SESSION['key'], 256),
-                true
-            );
-
-            //Prepare variables
-            $title = htmlspecialchars_decode($dataReceived['title']);
-            $complexity = htmlspecialchars_decode($dataReceived['complexity']);
-            $parentId = htmlspecialchars_decode($dataReceived['parent_id']);
-            $renewalPeriod = htmlspecialchars_decode($dataReceived['renewal_period']);
+	if ( $_SESSION['is_admin'] ) {
+		$dataReceived = json_decode( Encryption\Crypt\aesctr::decrypt($_POST['data'], $_SESSION['key'], 256), true );
+		$title = htmlspecialchars_decode($dataReceived['title']);
+		$complexity = htmlspecialchars_decode($dataReceived['complexity']);
+		$parentId = htmlspecialchars_decode($dataReceived['parent_id']);
+		$renewalPeriod = htmlspecialchars_decode($dataReceived['renewal_period']);
+	} else {
+		$dataReceived = json_decode($_POST['data']);
+		//Prepare variables
+		$title = htmlspecialchars_decode($dataReceived->title);
+		$complexity = htmlspecialchars_decode($dataReceived->complexity);
+		$parentId = htmlspecialchars_decode($dataReceived->parent_id);
+		$renewalPeriod = htmlspecialchars_decode($dataReceived->renewal_period);
+	}
 
             //Check if title doesn't contains html codes
             if (preg_match_all("|<[^>]+>(.*)</[^>]+>|U", $title, $out)) {
@@ -304,16 +308,23 @@ if (isset($_POST['newtitle'])) {
             $error = "";
 
             //decrypt and retreive data in JSON format
-            $dataReceived = json_decode(
-                Encryption\Crypt\aesctr::decrypt($_POST['data'], $_SESSION['key'], 256),
-                true
-            );
 
-            //Prepare variables
-            $title = htmlspecialchars_decode($dataReceived['title']);
-            $complexity = htmlspecialchars_decode($dataReceived['complexity']);
-            $parentId = htmlspecialchars_decode($dataReceived['parent_id']);
-            $renewalPeriod = htmlspecialchars_decode($dataReceived['renewal_period']);
+	if ( $_SESSION['is_admin'] ) {
+		$dataReceived = json_decode(Encryption\Crypt\aesctr::decrypt($_POST['data'], $_SESSION['key'], 256), true);
+		//Prepare variables
+		$title = htmlspecialchars_decode($dataReceived['title']);
+		$complexity = htmlspecialchars_decode($dataReceived['complexity']);
+		$parentId = htmlspecialchars_decode($dataReceived['parent_id']);
+		$renewalPeriod = htmlspecialchars_decode($dataReceived['renewal_period']);
+	} else {
+		$dataReceived = json_decode($_POST['data']);
+
+		//Prepare variables
+		$title = htmlspecialchars_decode($dataReceived->title);
+		$complexity = htmlspecialchars_decode($dataReceived->complexity);
+		$parentId = htmlspecialchars_decode($dataReceived->parent_id);
+		$renewalPeriod = htmlspecialchars_decode($dataReceived->renewal_period);
+	}
 
             //Check if title doesn't contains html codes
             if (preg_match_all("|<[^>]+>(.*)</[^>]+>|U", $title, $out)) {

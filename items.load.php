@@ -1746,7 +1746,7 @@ $(function() {
     $("#jstree").jstree({
     	"themes" : {
     		"theme" : "default",
-    		"url" : "includes/js/jstree/themes/default"
+    		"url" : "includes/js/jstree/themes/default/style.css"
     	},
         "plugins" : ["themes", "html_data", "ui", "search", "cookies"]
     })
