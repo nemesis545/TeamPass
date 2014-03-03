@@ -333,7 +333,7 @@ switch ($_POST['type']) {
         	}
 
             // authenticate the user
-            if ($adldap->authenticate($auth_username, $passwordClear)) {
+            if ($adldap->authenticate($auth_username, html_entity_decode($passwordClear))) {
                 $ldapConnection = true;
             } else {
                 $ldapConnection = false;
